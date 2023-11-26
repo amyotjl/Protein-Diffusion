@@ -1,0 +1,47 @@
+{
+    "trainer": {
+        "train_batch_size": 128,
+        "gradient_accumulate_every": 2,
+        "train_lr": 1e-05,
+        "train_num_steps": 10000,
+        "ema_update_every": 10,
+        "ema_decay": 0.995,
+        "adam_betas": [
+            0.9,
+            0.99
+        ],
+        "save_and_sample_every": 2000,
+        "num_samples": 1,
+        "amp": false,
+        "fp16": false,
+        "split_batches": true
+    },
+    "unet": {
+        "dim": 16,
+        "dim_mults": [
+            1,
+            2,
+            4,
+            8,
+            16
+        ],
+        "channels": 1,
+        "out_dim": null,
+        "self_condition": true,
+        "resnet_block_groups": 4,
+        "learned_variance": false,
+        "learned_sinusoidal_cond": false,
+        "random_fourier_features": false,
+        "learned_sinusoidal_dim": 16
+    },
+    "gaussian": {
+        "seq_length": 1024,
+        "timesteps": 1000,
+        "sampling_timesteps": null,
+        "loss_type": "l2",
+        "objective": "pred_x0",
+        "beta_schedule": "cosine",
+        "ddim_sampling_eta": 0.0,
+        "auto_normalize": true
+    }
+}
