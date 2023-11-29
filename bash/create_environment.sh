@@ -6,5 +6,5 @@ conda create --name $1 python=3.7
 source activate $1
 # install pytorch dependencies via conda
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
-conda install scipy -c conda-forge
-pip install denoising_diffusion_pytorch 
+conda install scipy joblib scikit-learn lightning -c conda-forge
+pip install denoising_diffusion_pytorch
