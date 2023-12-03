@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data import Dataset
 from torch import Tensor
-from denoising_diffusion_1D import Trainer1D, Unet1D, GaussianDiffusion1D
+from denoising_diffusion_pytorch import Trainer1D, Unet1D, GaussianDiffusion1D
 import joblib
 import glob
 import os
@@ -15,13 +15,10 @@ from utils import get_combinations, hash_dictionary
 def hash_dictionary(dictionary):
     # Convert the dictionary to a JSON string
     json_str = json.dumps(dictionary, sort_keys=True)
-
     # Create a hash object using the SHA256 algorithm
     hash_object = hashlib.sha256(json_str.encode())
-
     # Get the hexadecimal representation of the hash
     hash_hex = hash_object.hexdigest()
-
     return hash_hex
 
 
@@ -131,7 +128,6 @@ if __name__ == "__main__":
         'save_and_sample_every' : 2000,
         'num_samples' : 1, # must be square
         'amp' : False,
-        'fp16' : False,
         'split_batches' : True,
     },
     'unet':{
@@ -150,7 +146,6 @@ if __name__ == "__main__":
         'seq_length': 1024,
         'timesteps' : 1000,
         'sampling_timesteps' : None,
-        'loss_type' : ['l2','l1'],
         'objective' : ['pred_x0'],
         'beta_schedule' : ['cosine', 'linear'],
         'ddim_sampling_eta' : 0.,

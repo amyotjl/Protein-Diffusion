@@ -23,7 +23,7 @@ def run(args):
     Path(args.output_dir).mkdir(exist_ok=True)
     config = {
         'output_shape': [(180,22)],
-        'epochs': [3],
+        'epochs': [30],
         'bs':[args.batch_size],
         'latent_dim':[args.latent_dim],
         'channels':[[180,512,256],[180,512,64], [180, 512, 256, 128], [180,512,256,128,64]],
@@ -43,6 +43,8 @@ def run(args):
         with open(args.result_file, 'r') as f:
             parsed = f.read()
             used_model = parsed.split('\n')
+            f.close()
+
 
 
     torch.set_float32_matmul_precision('medium')
@@ -90,17 +92,18 @@ def run(args):
                             # Save only the last epoch validation accuracy.
                             with open('{}/{}.result'.format(args.output_dir, file_name), 'w') as file: 
                                 file.write('{} | {}'.format(np.mean(validation_accuracy), validation_accuracy))
-                                
+                                file.close()
+
                 except :
                     #ignore the failed model
                     pass
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-romp','--rom_path', type=str, help='path to the random orthogonal matrix stored in a JOBLIB file', required=True)
     parser.add_argument('-data', type=str, help="Path to the Joblib file containing the data formated in \{inputs, sequences\} (The result of script create_orth_dataset.py)", required=True)
-    parser.add_argument('-cv', '--cross_validation', type=int, help='Number of folds for cross validation', default=5, required=False)
+    parser.add_argument('-rom','--rom_path', type=str, help='path to the random orthogonal matrix stored in a JOBLIB file', required=True)
     parser.add_argument('-out', '--output_dir', type=str, help='Folder where to save the models', required=True)
+    parser.add_argument('-cv', '--cross_validation', type=int, help='Number of folds for cross validation', default=5, required=False)
     parser.add_argument('-res', '--result_file', type=str, help='Path to the file containing the results of previous experiment. It should be the file produce by "evalutate.py"',required=False, default=None)
     parser.add_argument('-bs', '--batch_size', type=int, help='Batch size')
     parser.add_argument('-ld', '--latent_dim', type=int, help='Latent dimension')
