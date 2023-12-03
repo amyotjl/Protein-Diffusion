@@ -5,6 +5,9 @@
 
 module load miniconda3-4.8.2-gcc-9.2.0-sbqd2xu
 
-source activate plz
+source activate diffusion
 
-srun python ../evaluate_diffusion1d.py -data $1 -f $2 -d $3 -g $4
+#Example
+# sbatch evaluate_diffusion1d.sh "../data/latent_test" "../testDiffusion"  2048
+
+srun python ../evaluate_diffusion1d.py -data $1 -f $2  -g $3

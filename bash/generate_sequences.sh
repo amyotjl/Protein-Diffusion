@@ -5,6 +5,6 @@
 
 module load miniconda3-4.8.2-gcc-9.2.0-sbqd2xu
 
-source activate plz
+source activate diffusion
 
-srun python ../generate_sequences.py -d $1 -rom $2 -a $3 -g $5 -bs $6 -out $7
+srun python ../generate_sequences.py -d $1 -rom $2 -a $3 -g $4 -bs $5 -out $6
