@@ -15,10 +15,13 @@ from utils import get_combinations, hash_dictionary
 def hash_dictionary(dictionary):
     # Convert the dictionary to a JSON string
     json_str = json.dumps(dictionary, sort_keys=True)
+
     # Create a hash object using the SHA256 algorithm
     hash_object = hashlib.sha256(json_str.encode())
+
     # Get the hexadecimal representation of the hash
     hash_hex = hash_object.hexdigest()
+
     return hash_hex
 
 
@@ -54,7 +57,7 @@ def train(config, data, args):
     try:
         os.makedirs(folder_name, exist_ok=False)
     except Exception:
-    
+
         print('ALREADY TRAINED ')
         return
 
@@ -95,7 +98,7 @@ def train(config, data, args):
             result = match.group(1)
             print('Loading checkpoint: ', result)
             trainer.load(result)
-   
+
     trainer.train()
 
 #returns all combination of a given dictionary where values are lists
@@ -106,8 +109,8 @@ def get_diffusion_combinations(config):
     return get_combinations(temp)
 
 
-if __name__ == "__main__":    
-    
+if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-data', type=str, help="Path to the Joblib file containing the LATENT data formated in \{inputs, sequences\} (The result of script create_orth_dataset.py)", required=True)
     parser.add_argument('-out', '--output_dir', type=str, help='Folder where to save the models', required=True)
@@ -120,7 +123,7 @@ if __name__ == "__main__":
     'trainer':{
         'train_batch_size' : 128,
         'gradient_accumulate_every' : 2,
-        'train_lr' : [0.001, 0.00001],
+        'train_lr' : [0.00001],
         'train_num_steps' : 10000,
         'ema_update_every' : 10,
         'ema_decay' : 0.995,
@@ -132,22 +135,22 @@ if __name__ == "__main__":
     },
     'unet':{
         'dim':int(args.dim),
-        'dim_mults':[(1, 2, 4), (1, 2, 4, 8), (1, 2, 4, 8, 16)],
+        'dim_mults':[(1, 2, 4, 8, 16)],
         'channels':1,
         'out_dim' : None,
-        'self_condition' : [True, False],
-        'resnet_block_groups' : [2,4,8],
+        'self_condition' : [True],
+        'resnet_block_groups' : [4],
         'learned_variance' : False,
         'learned_sinusoidal_cond' : False,
         'random_fourier_features' : False,
-        'learned_sinusoidal_dim' : [8, 16]
+        'learned_sinusoidal_dim' : [16]
     },
     'gaussian':{
         'seq_length': 1024,
         'timesteps' : 1000,
         'sampling_timesteps' : None,
         'objective' : ['pred_x0'],
-        'beta_schedule' : ['cosine', 'linear'],
+        'beta_schedule' : ['cosine'],
         'ddim_sampling_eta' : 0.,
         'auto_normalize' : True
     },

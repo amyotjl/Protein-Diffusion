@@ -25,12 +25,12 @@ def encode_data(args):
     seqs = []
     for batch in loader:
         data, seq = batch
-        data=data.unsqueeze(1).to(device)
+        data=data.to(device)
         output = model.encoder(data)
         outputs.append(output)
         seqs.append(seq)
 
-    joblib.dump({"inputs":torch.flatten(torch.cat(outputs), end_dim=-2), "sequences":seqs}, args.output_dir)
+    joblib.dump({"inputs":torch.cat(outputs).unsqueeze(1).detach().cpu(), "sequences":seqs}, args.output_dir)
 
 
 if __name__ == "__main__":

@@ -30,7 +30,7 @@ def merge_diffusion_results(args):
             results[folder] = {'fids': fids, 'config':config}
     print("{} models founds. Merging them.".format(len(results)))
     # Output the results.
-    with open('{}/{}'.format(diffusion_folder, args.output_file), 'w') as f:
+    with open('{}/all_results.txt'.format(diffusion_folder), 'w') as f:
         for item in sorted(results.items(), key=lambda item : item[1]['fids'][-1]): # sort by the last checkpoint FID
             f.write("{} | {} | {}\n".format(item[1]['fids'], item[0], item[1]['config']))
 
@@ -41,7 +41,6 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--folder', type=str, help='Root folder where all model where saved', required=True)
-    parser.add_argument('-out', '--output_file', type=str, help='Name of the JSON file to write the output all results ', default='all_result')
     args = parser.parse_args()
 
     merge_diffusion_results(args)
