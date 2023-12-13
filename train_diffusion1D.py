@@ -150,7 +150,7 @@ if __name__ == "__main__":
         'timesteps' : 1000,
         'sampling_timesteps' : None,
         'objective' : ['pred_x0'],
-        'beta_schedule' : ['cosine'],
+        'beta_schedule' : ['cosine', 'linear'],
         'ddim_sampling_eta' : 0.,
         'auto_normalize' : True
     },

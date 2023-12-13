@@ -7,4 +7,7 @@ module load miniconda3-4.8.2-gcc-9.2.0-sbqd2xu
 
 source activate diffusion
 
+# Example
+# sbatch merge_diffusion_evaluation.sh "../testDiffusion"
+
 srun python ../merge_diffusion_evaluation.py -f $1
